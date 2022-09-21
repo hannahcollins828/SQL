@@ -1,0 +1,32 @@
+- Create a bakery database
+
+CREATE TABLE bakery (id integer primary key, item TEXT, price INTEGER, quantity INTEGER, sold INTEGER);
+
+INSERT INTO bakery VALUES (1, "croissant", 3.00, 55, 52);
+INSERT INTO bakery VALUES (2, "pain au chocolat", 3.00, 45, 40);
+INSERT INTO bakery VALUES (3, "berry tart",4.50, 30, 22);
+INSERT INTO bakery VALUES (4, "blueberry scone", 2.25, 30, 18);
+INSERT INTO bakery VALUES (5, "chocolate chip scone", 2.25, 35, 26);
+INSERT INTO bakery VALUES (6, "small chocolate cake", 6.00, 50, 43);
+INSERT INTO bakery VALUES (7, "small vanilla cake", 6.00, 50, 41);
+INSERT INTO bakery VALUES (8, "small strawberry cake", 6.00, 45, 44);
+INSERT INTO bakery VALUES (9, "small pistachio cake", 6.00, 40, 31);
+INSERT INTO bakery VALUES (10, "loaf of bread", 5.00, 70, 68);
+INSERT INTO bakery VALUES (11, "herbal tea", 3.00, 45, 42);
+INSERT INTO bakery VALUES (12, "latte", 3.50, 60, 57);
+INSERT INTO bakery VALUES (13, "hot chocolate", 3.00, 30, 25);
+INSERT INTO bakery VALUES (14, "lemonade", 3.25, 30, 21);
+INSERT INTO bakery VALUES (15, "bottled water", 1.75, 60, 49);
+
+- Display the database ordered by the amount sold
+SELECT * FROM bakery ORDER BY sold;
+
+- What is the average price of a beverage?
+SELECT AVG(price) 
+FROM bakery WHERE id > 10
+
+- What are the five most popular items?
+SELECT item, price, sold
+FROM bakery
+order by sold desc
+limit 5; 
