@@ -1,0 +1,27 @@
+-- Example query (PostgreSQL)
+SELECT people.director, titles.type, titles.title FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+    Join "CharlotteChaze/BreakIntoTech"."netflix_people" people
+    On titles.show_id = people.show_id
+;
+
+select count(*) from "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+where type = 'Movie'
+;
+
+select Max(date(date_added)) from "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+;
+
+select title from "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+order by title asc
+;
+
+SELECT director FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" titles
+    Join "CharlotteChaze/BreakIntoTech"."netflix_people" people
+    On titles.show_id = people.show_id
+    where titles.title = 'Bright Star'
+    ;
+
+SELECT title, release_year FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+order by release_year asc
+limit 1
+;
