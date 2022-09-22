@@ -1,5 +1,19 @@
 
-Create table bts_wings (
+create table bts (
+id integer primary key,
+name text,
+age integer,
+position text);
+insert into bts values (1, "rm", 29, "leader");
+insert into bts values (2, "jin", 31, "vocal");
+insert into bts values (3, "suga", 30, "rap");
+insert into bts values (4, "jhope", 29, "rap");
+insert into bts values (5, "jimin", 28, "vocal");
+insert into bts values (6, "v", 28, "vocal");
+insert into bts values (7, "jungkook", 26, "vocal");
+
+
+create table bts_wings (
 id integer primary key, 
 song text,
 number_members integer,
@@ -22,6 +36,7 @@ insert into bts_wings values (12, "am i wrong", 7, "all members", "rm, jin, suga
 insert into bts_wings values (13, "21st century girl", 7, "all members", "rm, jin, suga, jhope, jimin, v, jungkook");
 insert into bts_wings values (14, "2!3!", 7, "all members", "rm, jin, suga, jhope, jimin, v, jungkook");
 insert into bts_wings values (15, "interlude:wings", 7, "all members", "rm, jin, suga, jhope, jimin, v, jungkook");
+
 
 create table bts_answer (
 id integer primary key, 
@@ -47,22 +62,10 @@ insert into bts_answer values (14, "im fine", 7, "all members", "rm, jin, suga, 
 insert into bts_answer values (15, "idol", 7,"all members", "rm, jin, suga, jhope, jimin, v, jungkook");
 insert into bts_answer values (16, "love yourself", 7,"all members", "rm, jin, suga, jhope, jimin, v, jungkook");
 
-create table bts (
-id integer primary key,
-name text,
-age integer,
-position text);
-insert into bts values (1, "rm", 29, "leader");
-insert into bts values (2, "jin", 31, "vocal");
-insert into bts values (3, "suga", 30, "rap");
-insert into bts values (4, "jhope", 29, "rap");
-insert into bts values (5, "jimin", 28, "vocal");
-insert into bts values (6, "v", 28, "vocal");
-insert into bts values (7, "jungkook", 26, "vocal");
-
 
 SELECT w.song, a.song, bts.name from bts
 join bts_wings w 
 on w.members=bts.name
 join bts_answer a
 on bts.name=a.members
+;
