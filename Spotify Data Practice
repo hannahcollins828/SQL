@@ -2,7 +2,7 @@
 # Then I created a table to insert Spotify data into.
 # Finally, I performed analytics on the data using SQL. 
 
-#Creating the table: 
+# Creating the table: 
 CREATE TABLE BIT_DB.Spotifydata (
 id integer PRIMARY KEY,
 artist_name varchar NOT NULL,
@@ -24,11 +24,11 @@ duration_ms integer NOT NULL,
 time_signature integer NOT NULL 
 )
 
-#Then I inserted the Spotify Data .csv into the table.
+# Then I inserted the Spotify Data .csv into the table.
 
-#Next, I explored the data using the following SQL. 
+# Next, I explored the data using the following SQL. 
 
-#I created a CTE to help me find the top 10 artists by popularity and label them as a 'Top Star'.
+# I created a CTE to help me find the top 10 artists by popularity and label them as a 'Top Star'.
 with popularity_average_CTE as (
 select artist_name, popularity from SpotifyData 
 group by artist_name
@@ -38,18 +38,18 @@ where popularity>=90
 ;
 
 
-#I saw Olivia Rodrigo multiple times in my table so I wanted to narrow it down to her songs only and see which songs were her most and least popular. 
+# I saw Olivia Rodrigo multiple times in my table so I wanted to narrow it down to her songs only and see which songs were her most and least popular. 
 select artist_name, track_name, popularity from bit_db.Spotifydata
 where artist_name = "Olivia Rodrigo"
 order by popularity desc
 ;
 
-#I wanted to know the average danceability and energy for each artist. 
+# I wanted to know the average danceability and energy for each artist. 
 select artist_name, avg(danceability), avg(energy) from bit_db.Spotifydata
 group by artist_name
 ;
 
-#I wanted to know which song in the dataset was the longest. Since the duration is in milliseconds, I made sure to look at just the seconds for an easier recognizability in length. 
+# I wanted to know which song in the dataset was the longest. Since the duration is in milliseconds, I made sure to look at just the seconds for an easier recognizability in length. 
 select duration_ms/1000, artist_name, track_name from bit_db.Spotifydata
 order by duration_ms desc
 limit 1
