@@ -1,4 +1,4 @@
-- Create a bakery database
+# In this set, I created a table and answered a few questions using the table created. This was my first table and query I created. 
 
 CREATE TABLE bakery (id integer primary key, item TEXT, price INTEGER, quantity INTEGER, sold INTEGER);
 
