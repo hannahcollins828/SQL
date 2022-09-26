@@ -1,0 +1,29 @@
+with popularity_average_CTE as (
+select artist_name, popularity from SpotifyData 
+group by artist_name
+)
+
+select artist_name, popularity, "Top Star" as tag from popularity_average_CTE
+where popularity>=90;
+
+
+select artist_name, popularity from bit_db.Spotifydata
+group by artist_name
+order by popularity desc
+limit 10
+;
+
+select artist_name, track_name from bit_db.Spotifydata
+where artist_name = "Olivia Rodrigo"
+order by popularity desc
+;
+
+select artist_name, avg(danceability), avg(energy) from bit_db.Spotifydata
+group by artist_name
+;
+
+select duration_ms/1000, artist_name, track_name from bit_db.Spotifydata
+order by duration_ms desc
+limit 1
+;
+
