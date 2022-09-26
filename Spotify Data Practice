@@ -1,27 +1,55 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+#I created a CTE to help me find the top 10 artists by popularity and label them as a 'Top Star'.
 with popularity_average_CTE as (
 select artist_name, popularity from SpotifyData 
 group by artist_name
 )
-
 select artist_name, popularity, "Top Star" as tag from popularity_average_CTE
-where popularity>=90;
-
-
-select artist_name, popularity from bit_db.Spotifydata
-group by artist_name
-order by popularity desc
-limit 10
+where popularity>=90
 ;
 
-select artist_name, track_name from bit_db.Spotifydata
+
+#I saw Olivia Rodrigo multiple times in my table so I wanted to narrow it down to her songs only and see which songs were her most and least popular. 
+select artist_name, track_name, popularity from bit_db.Spotifydata
 where artist_name = "Olivia Rodrigo"
 order by popularity desc
 ;
 
+#I wanted to know the average danceability and energy for each artist. 
 select artist_name, avg(danceability), avg(energy) from bit_db.Spotifydata
 group by artist_name
 ;
 
+#I wanted to know which song in the dataset was the longest. Since the duration is in milliseconds, I made sure to look at just the seconds for an easier recognizability in length. 
 select duration_ms/1000, artist_name, track_name from bit_db.Spotifydata
 order by duration_ms desc
 limit 1
