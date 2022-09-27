@@ -1,0 +1,110 @@
+# How many artists have multiple albums in the store and how many albums do they have?
+join chinook.albums
+on artists.ArtistId = albums.ArtistId
+group by name
+having count(title) > 1
+order by count(title) desc
+;
+
+# Show Customers (their full names, customer ID, and country) who are not in the US.
+select firstname, lastname, customerid, country from chinook.customers
+where country <> "USA"
+;
+
+# Show only the Customers from Brazil.
+select firstname, lastname, customerid, country from chinook.customers
+where country = "Brazil"
+;
+
+# 
+select firstname, lastname, invoiceid, billingcountry, invoicedate from chinook.customers
+join chinook.invoices
+on customers.CustomerId = invoices.CustomerId
+where billingcountry = "Brazil"
+;
+
+select employeeid, lastname, firstname, title from chinook.employees
+where title = "Sales Support Agent"
+;
+
+select billingcountry from chinook.invoices
+group by billingcountry
+;
+
+select invoiceid, invoicedate, supportrepid, employees.LastName, employees.FirstName from chinook.invoices
+join chinook.customers
+on invoices.CustomerId = customers.CustomerId
+join chinook.employees
+on customers.SupportRepId = employees.EmployeeId
+where title = "Sales Support Agent"
+;
+
+select customers.LastName as customer_last, customers.FirstName as customer_first, sum(total), billingcountry, employees.LastName as employee_last, employees.FirstName as employee_first
+from chinook.invoices
+join chinook.customers
+on invoices.CustomerId = customers.CustomerId
+join chinook.employees
+on customers.SupportRepId = employees.EmployeeId
+where title = "Sales Support Agent"
+group by customers.CustomerId
+;
+
+
+select count(invoiceid) from chinook.invoices
+where invoicedate like "2009%"
+;
+
+select sum(total) from chinook.invoices
+where invoicedate like "2009%"
+;
+
+select t.Name, i.InvoiceLineId from chinook.invoice_items i 
+join chinook.tracks t 
+on i.TrackID = t.Trackid
+;
+
+select tracks.Name, tracks.Composer, invoice_items.InvoiceLineId from chinook.invoice_items 
+join chinook.tracks
+on invoice_items.TrackId = tracks.TrackId
+;
+
+select tracks.Name, albums.Title, media_types.Name, genres.Name 
+from chinook.tracks
+join chinook.albums
+on tracks.AlbumId = albums.AlbumId
+join chinook.media_types
+on tracks.MediaTypeId = media_types.MediaTypeId
+join chinook.genres
+on tracks.GenreId = genres.GenreId
+order by albums.Title asc
+;
+
+select round(sum(total), 2) as "Total Sales", employees.LastName, employees.FirstName, employeeid
+from chinook.invoices
+join chinook.customers
+on invoices.CustomerId = customers.CustomerId
+join chinook.employees
+on customers.SupportRepId = employees.EmployeeId
+where title = "Sales Support Agent"
+group by employeeid
+;
+
+select round(sum(total), 2) as "Total Sales", employees.LastName, employees.FirstName, employeeid
+from chinook.invoices
+join chinook.customers
+on invoices.CustomerId = customers.CustomerId
+join chinook.employees
+on customers.SupportRepId = employees.EmployeeId
+where title = "Sales Support Agent" and invoices.InvoiceDate like "2009%"
+group by employeeid
+order by round(sum(total), 2) desc
+limit 1
+;
+
+select hiredate from chinook.employees
+order by hiredate desc
+limit 1
+;
+
+
+
