@@ -1,10 +1,4 @@
-# How many artists have multiple albums in the store and how many albums do they have?
-join chinook.albums
-on artists.ArtistId = albums.ArtistId
-group by name
-having count(title) > 1
-order by count(title) desc
-;
+I answered various questions using a a dataset called chinook, which represents a digital media store and includes tables for artists, albums, media tracks, invoices, and customers. 
 
 # Show Customers (their full names, customer ID, and country) who are not in the US.
 select firstname, lastname, customerid, country from chinook.customers
@@ -16,21 +10,24 @@ select firstname, lastname, customerid, country from chinook.customers
 where country = "Brazil"
 ;
 
-# 
+# Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
 select firstname, lastname, invoiceid, billingcountry, invoicedate from chinook.customers
 join chinook.invoices
 on customers.CustomerId = invoices.CustomerId
 where billingcountry = "Brazil"
 ;
 
+# Show the Employees who are Sales Agents.
 select employeeid, lastname, firstname, title from chinook.employees
 where title = "Sales Support Agent"
 ;
 
+# Find a unique/distinct list of billing countries from the Invoice table.
 select billingcountry from chinook.invoices
 group by billingcountry
 ;
 
+# Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
 select invoiceid, invoicedate, supportrepid, employees.LastName, employees.FirstName from chinook.invoices
 join chinook.customers
 on invoices.CustomerId = customers.CustomerId
@@ -39,6 +36,7 @@ on customers.SupportRepId = employees.EmployeeId
 where title = "Sales Support Agent"
 ;
 
+# Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
 select customers.LastName as customer_last, customers.FirstName as customer_first, sum(total), billingcountry, employees.LastName as employee_last, employees.FirstName as employee_first
 from chinook.invoices
 join chinook.customers
@@ -49,25 +47,29 @@ where title = "Sales Support Agent"
 group by customers.CustomerId
 ;
 
-
+# How many Invoices were there in 2009?
 select count(invoiceid) from chinook.invoices
 where invoicedate like "2009%"
 ;
 
+# What are the total sales for 2009?
 select sum(total) from chinook.invoices
 where invoicedate like "2009%"
 ;
 
+# Write a query that includes the purchased track name with each invoice line item.
 select t.Name, i.InvoiceLineId from chinook.invoice_items i 
 join chinook.tracks t 
 on i.TrackID = t.Trackid
 ;
 
+# Write a query that includes the purchased track name AND artist name with each invoice line item.
 select tracks.Name, tracks.Composer, invoice_items.InvoiceLineId from chinook.invoice_items 
 join chinook.tracks
 on invoice_items.TrackId = tracks.TrackId
 ;
 
+# Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
 select tracks.Name, albums.Title, media_types.Name, genres.Name 
 from chinook.tracks
 join chinook.albums
@@ -79,6 +81,16 @@ on tracks.GenreId = genres.GenreId
 order by albums.Title asc
 ;
 
+# How many artists have multiple albums in the store and how many albums do they have?
+select artists.name, count(title) from chinook.artists
+join chinook.albums
+on artists.ArtistId = albums.ArtistId
+group by name
+having count(title) > 1
+order by count(title) desc
+;
+
+# Show the total sales made by each sales agent.
 select round(sum(total), 2) as "Total Sales", employees.LastName, employees.FirstName, employeeid
 from chinook.invoices
 join chinook.customers
@@ -89,6 +101,7 @@ where title = "Sales Support Agent"
 group by employeeid
 ;
 
+# Which sales agent made the most in sales in 2009?
 select round(sum(total), 2) as "Total Sales", employees.LastName, employees.FirstName, employeeid
 from chinook.invoices
 join chinook.customers
@@ -101,6 +114,7 @@ order by round(sum(total), 2) desc
 limit 1
 ;
 
+# When was the last employee hired?
 select hiredate from chinook.employees
 order by hiredate desc
 limit 1
