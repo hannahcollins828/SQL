@@ -1,0 +1,37 @@
+/*SQL Murder Mystery Practice*/
+
+SELECT sql 
+  FROM sqlite_master
+ where name = 'crime_scene_report';
+
+/*finding crime report*/ 
+select * 
+from crime_scene_report
+where date = 20180115
+and type = "murder"
+and city = "SQL City"
+;
+
+/*first witness*/
+select *, max(address_number)
+from person
+where address_street_name = "Northwestern Dr"
+;
+
+/*second witness*/
+select *
+from person
+where address_street_name = "Franklin Ave" 
+and name like "Annabel%"
+;
+
+/*witnesses' testimony*/
+select *
+from interview
+where person_id = 14887
+or person_id = 16371
+;
+
+/*information from tesimonies -- witness #1 - "Get Fit Now Gym" bag. Membership # starting with 48Z and gold member. Car plate includes H42W. 
+witness #2 - was at the gym on Jan. 9th*/
+
