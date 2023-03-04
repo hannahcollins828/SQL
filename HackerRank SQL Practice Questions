@@ -1,25 +1,33 @@
 # Revising the Select Query
 # Query all columns for all American cities in the CITY table with populations larger than 100000. The CountryCode for America is USA.
-select * from city
-where countrycode = "USA"
-having population > 100000
-;
+    
+    select * from city
+      where countrycode = "USA"
+      having population > 100000
+  ;
+
 
 # Employee Salaries
 #Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee having a salary greater than  per month who have been employees for less than  months. Sort your result by ascending employee_id.
-select name from employee
-where salary > 2000 and months < 10
-order by employee_id asc
-;
+    
+    select name from employee
+      where salary > 2000 and months < 10
+      order by employee_id asc
+  ;
+
 
 # Higher than 75 Marks
 # Query the Name of any student in STUDENTS who scored higher than 75 Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
-SELECT name FROM students WHERE marks > 75 ORDER BY SUBSTR(name, -3, 3), id asc;
+   
+   SELECT name FROM students WHERE marks > 75 ORDER BY SUBSTR(name, -3, 3), id asc;
+
 
 # Revising Aggregations - the Count Function
 # Query a count of the number of cities in CITY having a Population larger than 100,000.
-select count(id) from city
-where population > 100000;
+   
+   select count(id) from city
+      where population > 100000;
+
 
 # Types of Triangles
 # Write a query identifying the type of each record in the TRIANGLES table using its three side lengths. Output one of the following statements for each record in the table:
@@ -27,26 +35,57 @@ where population > 100000;
 # Isosceles: It's a triangle with 2 sides of equal length.
 # Scalene: It's a triangle with 1 sides of differing lengths.
 # Not A Triangle: The given values of A, B, and C don't form a triangle.
-select case 
-when (A + B)<=C or (B + C)<= A or (C + A)<= B then "Not A Triangle"
-when A=B and B=C then "Equilateral"
-when A=B or B=C or A=C then "Isosceles"
-else "Scalene"
-end
-from triangles
-;
+    
+    select case 
+       when (A + B)<=C or (B + C)<= A or (C + A)<= B then "Not A Triangle"
+      when A=B and B=C then "Equilateral"
+      when A=B or B=C or A=C then "Isosceles"
+      else "Scalene"
+      end
+      from triangles
+  ;
+
 
 # Japan Population
-# Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCODE for Japan is JPN.
-select sum(population) from city
-where countrycode = "JPN"
-;
+/*Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCODE for Japan is JPN.*/
+   
+   select sum(population) from city
+      where countrycode = "JPN"
+  ;
+
 
 # Average Population of Each Continent
 # Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
 # Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
-select continent, floor(avg(city.population)) from country
-join city
-on country.code = city.countrycode
-group by continent
-;
+    
+    select continent, floor(avg(city.population)) from country
+      join city
+      on country.code = city.countrycode
+      group by continent
+  ;
+
+
+/* WEATHER STATION PRACTICES
+Weather Station #2 - Query the following two values from the STATION table:
+The sum of all values in LAT_N rounded to a scale of 2 decimal places.
+The sum of all values in LONG_W rounded to a scale of 2 decimal places. */
+  
+  select round(sum(lat_n), 2), round(sum(long_w), 2)
+    from station
+    ;
+
+/*Weather Station #3 - Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.*/
+
+select distinct city 
+    from station
+    where mod(id, 2) = 0
+    ;
+
+/*Weather Station #4 - Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table.*/
+
+    select count(city) - count(distinct city)
+      from station
+      ;
+    
+/*Weather Station #5 - Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.*\
+
