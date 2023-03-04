@@ -34,4 +34,32 @@ or person_id = 16371
 
 /*information from tesimonies -- witness #1 - "Get Fit Now Gym" bag. Membership # starting with 48Z and gold member. Car plate includes H42W. 
 witness #2 - was at the gym on Jan. 9th*/
+select name
+from get_fit_now_check_in as ci
+join get_fit_now_member as m
+on ci.membership_id = m.id
+join person as p
+on p.id = m.person_id
+join drivers_license 
+on drivers_license.id = p.license_id
+where ci.membership_id like "48Z%"
+and m.membership_status = "gold"
+and ci.check_in_date = 20180109
+and drivers_license.plate_number like "%H42W%"
+;
 
+/*check answer to confirm murderer*/
+INSERT INTO solution VALUES (1, 'Jeremy Bowers');
+SELECT value FROM solution;
+
+/* Congrats, you found the murderer! But wait, there's more... If you think you're up for a challenge, try querying the interview transcript of the murderer to find the real villain behind this crime. */
+select name 
+from drivers_license as dl
+join person as p
+on dl.id = p.license_id
+join facebook_event_checkin as fb
+on fb.person_id = p.id
+where fb.event_name = "SQL Symphony Concert" 
+and fb.date like "201712%"
+and dl.car_make = "Tesla"
+;
